@@ -22,10 +22,21 @@ async function run() {
       await client.connect();
       console.log("connected to database to confirm")
       const serviceCollection =  client.db("traveAgency").collection("services");
+     
+      const orderCollection  =  client.db("traveAgency").collection("orders");
 
        //post api
       app.post("/addServices",(req, res)=>{
         serviceCollection.insertOne(req.body).then(result=>{
+            // console.log(result)
+          res.send(result.insertedId);
+        })
+      })
+
+      // Add order Api
+
+      app.post("/orders",(req, res)=>{
+        orderCollection.insertOne(req.body).then(result=>{
             // console.log(result)
           res.send(result.insertedId);
         })
@@ -38,22 +49,29 @@ async function run() {
           res.send(result);
         });
 
+        //get order api
+
+        app.get("/orders",async(req,res)=>{
+          const result = await orderCollection.find({}).toArray();
+          res.send(result);
+        });
+
         // //get Single Service
 
         app.get('/services/:id',async(req,res)=>{
            const id = req.params.id;
-           console.log(id)
+          //  console.log(id)
            const query = {_id: ObjectId(id)};
           const service = await serviceCollection.findOne(query);
           res.json(service);
          })
 
        //delet service
-       app.delete("/deleteService/:id",async(req,res)=>{
+       app.delete("/deleteOrders/:id",async(req,res)=>{
           
-        // console.log(req.params.id)
+        console.log(req.params.id)
 
-        const result = await serviceCollection.deleteOne({_id:ObjectId(req.params.id),})
+        const result = await orderCollection.deleteOne({_id:ObjectId(req.params.id),})
         // console.log(result);
         res.send(result)
       });
