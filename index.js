@@ -20,7 +20,7 @@ console.log(uri)
 async function run() {
     try {
       await client.connect();
-      console.log("connected to database to confirm")
+      console.log("connect to database for confirs message")
       const serviceCollection =  client.db("traveAgency").collection("services");
      
       const orderCollection  =  client.db("traveAgency").collection("orders");
