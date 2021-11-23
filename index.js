@@ -20,7 +20,7 @@ console.log(uri)
 async function run() {
     try {
       await client.connect();
-      console.log("connect to database for confirs message")
+      console.log("connect to database for relax confirs message")
       const serviceCollection =  client.db("traveAgency").collection("services");
      
       const orderCollection  =  client.db("traveAgency").collection("orders");
